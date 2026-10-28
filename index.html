@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101010">
+<title>HERO PROTOCOL</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#101010;color:#f5f5f5;
+  font-family:Arial,sans-serif
+}
+header{
+  padding:18px;background:#181818;
+  border-bottom:3px solid #ff3939;
+  display:flex;justify-content:space-between;
+  font-weight:900;letter-spacing:1px
+}
+.red{color:#ff3939}
+.yellow{color:#ffd84a}
+main{max-width:600px;margin:auto;padding:15px}
+.hero{
+  padding:25px 18px;background:linear-gradient(130deg,#441414,#171717);
+  border:1px solid #613232
+}
+.tag{font-size:11px;color:#ff5555;letter-spacing:2px;font-weight:bold}
+h1{font-size:38px;line-height:1.05;margin:15px 0}
+p{line-height:1.6}
+.muted{color:#aaa;font-size:13px}
+.card{
+  background:#1b1b1b;border:1px solid #383838;
+  padding:17px;margin-top:15px
+}
+h2{font-size:14px;border-bottom:1px solid #383838;padding-bottom:12px}
+label{display:block;font-size:13px;margin:14px 0 7px}
+input,select{
+  width:100%;padding:13px;background:#101010;
+  color:white;border:1px solid #484848;border-radius:4px;
+  font-size:16px
+}
+button{
+  padding:13px;border:1px solid #555;border-radius:4px;
+  background:#292929;color:white;font-weight:bold;
+  cursor:pointer
+}
+.primary{background:#ffd84a;color:#111;border-color:#ffd84a}
+.full{width:100%;margin-top:15px}
+.hidden{display:none}
+.rank{font-size:35px;font-weight:900;color:#ffd84a}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:#292929;padding:12px 4px;text-align:center}
+.stat strong{display:block;font-size:23px}
+.stat small{font-size:9px;color:#aaa}
+.quest{padding:14px;background:#141414;border:1px solid #444;margin-top:10px}
+.quest h3{font-size:14px}
+.quest p{font-size:13px;color:#bbb}
+.quest label{display:flex;align-items:center;gap:10px}
+.quest input{width:20px;accent-color:#ffd84a}
+.bar{height:7px;background:#444;margin-top:12px}
+.bar div{height:100%;background:#ff3939;width:0}
+.note{font-size:11px;color:#aaa;line-height:1.6}
+footer{text-align:center;padding:25px;color:#777;font-size:11px}
+</style>
+</head>
+
+<body>
+<header>
+  <span>HERO<span class="red">//</span>PROTOCOL</span>
+  <span class="yellow">SYSTEM ONLINE</span>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="tag">HERO ASSOCIATION // TRAINING DIVISION</div>
+    <h1>BREAK YOUR<br><span class="yellow">LIMITS.</span></h1>
+    <p class="muted">Every hero starts somewhere. Evaluate your
+    current abilities, receive your quests and build your strength.</p>
+  </section>
+
+  <section class="card" id="registration">
+    <h2>01 / HERO REGISTRATION</h2>
+    <form id="form">
+      <label for="push">Push-ups completed with good form</label>
+      <input id="push" type="number" min="0" max="200" required placeholder="e.g. 10">
+
+      <label for="pull">Pull-ups completed with good form</label>
+      <input id="pull" type="number" min="0" max="100" required placeholder="e.g. 2">
+
+      <label for="squat">Bodyweight squats completed with good form</label>
+      <input id="squat" type="number" min="0" max="200" required placeholder="e.g. 20">
+
+      <label for="experience">Training experience</label>
+      <select id="experience">
+        <option value="beginner">Beginner</option>
+        <option value="some">Some experience</option>
+        <option value="regular">Regular training</option>
+      </select>
+
+      <label for="days">Available training days per week</label>
+      <select id="days">
+        <option value="2">2 days</option>
+        <option value="3" selected>3 days</option>
+        <option value="4">4 days</option>
+      </select>
+
+      <label for="equipment">Equipment available</label>
+      <select id="equipment">
+        <option value="none">No equipment</option>
+        <option value="bar">Pull-up bar</option>
+        <option value="gym">Gym access</option>
+      </select>
+
+      <label for="effort">Usual workout difficulty</label>
+      <select id="effort">
+        <option value="easy">Comfortable</option>
+        <option value="moderate" selected>Challenging but manageable</option>
+        <option value="hard">Very difficult</option>
+      </select>
+
+      <button class="primary full" type="submit">
+        EVALUATE MY LEVEL →
+      </button>
+    </form>
+  </section>
+
+  <section class="card hidden" id="results">
+    <h2>02 / YOUR EVALUATION</h2>
+    <div class="tag">PROVISIONAL TRAINING CLASS</div>
+    <div class="rank" id="rank">CLASS C</div>
+    <p class="muted" id="summary"></p>
+
+    <div class="stats">
+      <div class="stat"><strong id="ps">0</strong><small>PUSH-UPS</small></div>
+      <div class="stat"><strong id="pl">0</strong><small>PULL-UPS</small></div>
+      <div class="stat"><strong id="ss">0</strong><small>SQUATS</small></div>
+    </div>
+    <p class="note">This is a game-style starting category, not a
+    validated fitness test or medical assessment.</p>
+  </section>
+
+  <section class="card hidden" id="missions">
+    <h2>03 / YOUR ASSIGNED QUESTS</h2>
+    <p class="muted" id="intro"></p>
+    <div id="quests"></div>
+    <p class="muted" id="progress">0 quests completed</p>
+    <div class="bar"><div id="bar"></div></div>
+    <button class="full" id="reset" type="button">RESET QUESTS</button>
+    <button class="primary full" id="reassess" type="button">REASSESS</button>
+  </section>
+
+  <section class="card">
+    <h2>HERO CODE / SAFETY RULES</h2>
+    <p class="note">Use controlled technique, take adequate rest and
+    progress gradually. Stop if you experience pain, dizziness or
+    unusual shortness of breath. Never attempt extreme fictional
+    anime training routines.</p>
+  </section>
+</main>
+
+<footer>HERO PROTOCOL // YOUR JOURNEY BEGINS HERE</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const KEY = "heroProtocolProgress";
+
+function save(data,completed){
+  try{
+    localStorage.setItem(KEY,JSON.stringify({data,completed}));
+  }catch(e){}
+}
+
+function load(){
+  try{
+    return JSON.parse(localStorage.getItem(KEY)||"null");
+  }catch(e){return null}
+}
+
+function makeQuests(d){
+  const factor=d.experience==="beginner"?.5:
+    d.experience==="some"?.7:.8;
+  const effort=d.effort==="hard"?.65:1;
+  const scale=factor*effort;
+
+  const push=Math.max(2,Math.min(10,Math.round(d.push*scale*.5)));
+  const squat=Math.max(4,Math.min(15,Math.round(d.squat*scale*.5)));
+
+  return [
+    {
+      title:"QUEST 01 // UPPER BODY",
+      tag:"PUSH",
+      text:d.push<5?
+      "Try 2 easy sets of wall push-ups or incline push-ups.":
+      "Try 2 sets of up to "+push+
+      " controlled push-ups. Stop before your form breaks."
+    },
+    {
+      title:"QUEST 02 // BACK & GRIP",
+      tag:"PULL",
+      text:d.pull<1?
+      (d.equipment==="bar"?
+      "Practice comfortable, supported hangs or assisted pull-up progressions.":
+      "Try gentle back-strengthening movements. Do not improvise unsafe equipment."):
+      "Practice 2 easy sets of pull-ups, stopping before your form breaks."
+    },
+    {
+      title:"QUEST 03 // LOWER BODY",
+      tag:"LEGS",
+      text:"Try 2 sets of up to "+squat+
+      " comfortable bodyweight squats."
+    },
+    {
+      title:"QUEST 04 // RECOVERY",
+      tag:"RECOVERY",
+      text:"Take a relaxed walk or do comfortable mobility work. Recovery is part of training."
+    },
+    {
+      title:"QUEST 05 // CONSISTENCY",
+      tag:"HABIT",
+      text:"Schedule your next session after adequate recovery. Avoid demanding the same muscles on consecutive days."
+    }
+  ];
+}
+
+function evaluate(d){
+  if(d.experience==="regular"&&d.push>=20&&d.pull>=5&&d.squat>=30){
+    return ["CLASS A","You report an established starting base. Focus on consistent technique and balanced progress."];
+  }
+  if(d.push>=10&&d.pull>=2&&d.squat>=15){
+    return ["CLASS B","You report some foundation across these movements. Build consistency and work on weaker movements."];
+  }
+  return ["CLASS C","Start with manageable variations and develop technique, confidence and consistency."];
+}
+
+function render(d,completed=[]){
+  const result=evaluate(d);
+  $("rank").textContent=result[0];
+  $("summary").textContent=result[1];
+  $("ps").textContent=d.push;
+  $("pl").textContent=d.pull;
+  $("ss").textContent=d.squat;
+  $("intro").textContent="Training availability: "+d.days+" days per week.";
+
+  $("results").classList.remove("hidden");
+  $("missions").classList.remove("hidden");
+
+  const area=$("quests");
+  area.replaceChildren();
+
+  makeQuests(d).forEach((q,i)=>{
+    const box=document.createElement("div");
+    box.className="quest";
+
+    const tag=document.createElement("div");
+    tag.className="tag";
+    tag.textContent=q.tag;
+
+    const title=document.createElement("h3");
+    title.textContent=q.title;
+
+    const desc=document.createElement("p");
+    desc.textContent=q.text;
+
+    const label=document.createElement("label");
+    const check=document.createElement("input");
+    check.type="checkbox";
+    check.checked=completed.includes(i);
+
+    const caption=document.createElement("span");
+    caption.textContent="Quest completed";
+
+    check.addEventListener("change",()=>{
+      const current=[...area.querySelectorAll("input:checked")]
+        .map((el,index)=>index);
+      const all=[...area.querySelectorAll("input")];
+      save(d,all.map((el,j)=>el.checked?j:-1).filter(j=>j>=0));
+      progress();
+    });
+
+    label.append(check,caption);
+    box.append(tag,title,desc,label);
+    area.append(box);
+  });
+
+  function progress(){
+    const checks=[...area.querySelectorAll("input")];
+    const done=checks.filter(c=>c.checked).length;
+    $("progress").textContent=done+" of "+checks.length+" quests completed";
+    $("bar").style.width=(done/checks.length*100)+"%";
+  }
+
+  progress();
+  save(d,completed);
+}
+
+$("form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const d={
+    push:Number($("push").value),
+    pull:Number($("pull").value),
+    squat:Number($("squat").value),
+    experience:$("experience").value,
+    days:$("days").value,
+    equipment:$("equipment").value,
+    effort:$("effort").value
+  };
+
+  if(!Number.isInteger(d.push)||d.push<0||d.push>200||
+     !Number.isInteger(d.pull)||d.pull<0||d.pull>100||
+     !Number.isInteger(d.squat)||d.squat<0||d.squat>200){
+    alert("Enter valid whole-number repetitions.");
+    return;
+  }
+
+  render(d,[]);
+  $("results").scrollIntoView({behavior:"smooth"});
+});
+
+$("reset").addEventListener("click",()=>{
+  const old=load();
+  if(old)render(old.data,[]);
+});
+
+$("reassess").addEventListener("click",()=>{
+  $("registration").scrollIntoView({behavior:"smooth"});
+});
+
+const previous=load();
+if(previous){
+  const d=previous.data;
+  for(const id of ["push","pull","squat","experience","days","equipment","effort"]){
+    $(id).value=d[id];
+  }
+  render(d,previous.completed||[]);
+}
+</script>
+</body>
+</html>
